@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class MyFridge extends AppCompatActivity {
 
+    // Comment yo.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
