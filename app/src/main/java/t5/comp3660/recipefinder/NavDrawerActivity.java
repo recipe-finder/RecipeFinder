@@ -75,6 +75,8 @@ public class NavDrawerActivity extends AppCompatActivity {
             fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
             setTitle(mDrawerOptionLabels[0]);
         }
+
+
     }
 
     @Override
