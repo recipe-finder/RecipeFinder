@@ -71,12 +71,14 @@ public class RecipeResultsFragment extends Fragment {
                 RecipeResultListItem clicked = recipe_results_list.get(position);
                 recipeData.putInt("id", clicked.id);
                 recipeData.putString("title", clicked.title);
+                recipeData.putString("imageUrl", clicked.imageUrl);
+                recipeData.putInt("usedIngredients", clicked.usedIngredients);
                 recipe.setArguments(recipeData);
                 fm.beginTransaction().replace(R.id.content_frame, recipe).commit();
             }
         });
 
-        FakeHttpClient getRequest = new FakeHttpClient(new OnTaskComplete() {
+        SpoonacularRequest getRequest = new SpoonacularRequest(new OnTaskComplete() {
             @Override
             public void onTaskCompleteRequest(String result) {
                 Gson gson = new Gson();
@@ -87,8 +89,10 @@ public class RecipeResultsFragment extends Fragment {
                 }
                 adapter.notifyDataSetChanged();
             }
-        }, 1);
-        getRequest.execute();
+        });
+        String path = "/recipes/findByIngredients";
+        String params = "?ingredients=rice,chicken,butter,salt,pepper&number=10&ranking=1";
+        getRequest.execute(path, params);
 
 
 

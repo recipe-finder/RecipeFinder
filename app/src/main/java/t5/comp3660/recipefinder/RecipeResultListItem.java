@@ -9,10 +9,10 @@ public class RecipeResultListItem {
     public int missingIngredients;
 
     public RecipeResultListItem(RecipeResult recipeResult) {
-        this.id = recipeResult.getId();
-        this.title = recipeResult.getTitle();
-        this.usedIngredients = recipeResult.getUsedIngredientCount();
-        this.missingIngredients = recipeResult.getMissedIngredientCount();
-        this.imageUrl = recipeResult.getImage();
+        this.id = recipeResult.id;
+        this.title = recipeResult.title;
+        this.usedIngredients = recipeResult.usedIngredientCount;
+        this.missingIngredients = recipeResult.missedIngredientCount;
+        this.imageUrl = recipeResult.image;
     }
 }

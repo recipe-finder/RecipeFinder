@@ -8,18 +8,27 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpGetRequest extends AsyncTask<String, Void, String> {
+public class SpoonacularRequest extends AsyncTask<String, Void, String> {
     public static final String REQUEST_METHOD = "GET";
     public static final int READ_TIMEOUT = 15000;
     public static final int CONNECTION_TIMEOUT = 15000;
+    private static final String MASHAPE_KEY = "aWQT9fBrEYmshAiaDubbuFA7wvjtp1mipnXjsngv8PzPjbi9q1";
+    private OnTaskComplete listener;
+
+    public SpoonacularRequest(OnTaskComplete listener) {
+        this.listener = listener;
+    }
+
     @Override
     protected String doInBackground(String... params){
-        String stringUrl = params[0];
+        String baseUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com";
+        String path = params[0];
+        String reqParams = params[1];
         String result;
         String inputLine;
         try {
             //Create a URL object holding our url
-            URL myUrl = new URL(stringUrl);
+            URL myUrl = new URL(baseUrl + path + reqParams);
             //Create a connection
             HttpURLConnection connection =(HttpURLConnection)
                     myUrl.openConnection();
@@ -27,6 +36,8 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
             connection.setRequestMethod(REQUEST_METHOD);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestProperty("X-Mashape-Key", MASHAPE_KEY);
+            connection.setRequestProperty("Accept", "application/json");
 
             //Connect to our url
             connection.connect();
@@ -53,6 +64,6 @@ public class HttpGetRequest extends AsyncTask<String, Void, String> {
         return result;
     }
     protected void onPostExecute(String result){
-        super.onPostExecute(result);
+        listener.onTaskCompleteRequest(result);
     }
 }
