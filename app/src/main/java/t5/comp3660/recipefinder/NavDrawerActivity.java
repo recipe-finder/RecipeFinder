@@ -58,7 +58,7 @@ public class NavDrawerActivity extends AppCompatActivity {
                         fragment = new MyFridgeFragment();
                         break;
                     case 1:
-                        fragment = new RecipeSearchFragment();
+                        fragment = new RecipeResultsFragment();
                         break;
                 }
 
