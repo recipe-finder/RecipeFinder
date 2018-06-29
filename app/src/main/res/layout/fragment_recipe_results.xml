@@ -5,20 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".RecipeResultsFragment">
 
-    <ListView
-        android:id="@+id/RecipeResultsListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+    <ProgressBar
+        android:id="@+id/rr_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:maxHeight="300dp"
+        android:maxWidth="300dp"
+        android:minHeight="125dp"
+        android:minWidth="125dp" />
 
-    <TextView
-        android:id="@+id/RecipeResultsEmpty"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:gravity="center_vertical"
-        android:text="@string/recipe_results_empty"
-        android:textSize="18sp"
-        android:textAlignment="center"/>
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/RecipeResultsListView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"></ListView>
+
+    </LinearLayout>
+
+
 
 </FrameLayout>

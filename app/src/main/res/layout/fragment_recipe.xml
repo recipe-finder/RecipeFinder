@@ -21,7 +21,7 @@
             android:padding="10dp">
 
             <LinearLayout
-                android:id="@+id/lin_1"
+                android:id="@+id/r_showcase"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -31,49 +31,54 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:adjustViewBounds="true"
-                    android:src="@android:color/holo_orange_dark"
+                    android:src="@drawable/img_placeholder"
                     android:layout_alignParentLeft="true"
                     android:scaleType="centerCrop"/>
 
-                <TextView
-                    android:id="@+id/r_title"
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/imageView2"
-                    android:text="TextView"
-                    android:textSize="28sp"
-                    android:textStyle="bold"/>
+                    android:layout_toRightOf="@+id/imageView2">
+                    <TextView
+                        android:id="@+id/r_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="TextView"
+                        android:textSize="28sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:paddingTop="10dp"
+                        android:id="@+id/r_servings"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="TextView"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/r_ready_in"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="TextView"
+                        android:textSize="15sp"
+                        />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/r_instructions"
-                android:layout_below="@+id/lin_1"
+                android:id="@+id/r_required_ingredients"
+                android:layout_below="@+id/r_showcase"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <!--<TextView-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Ingredients:"/>-->
-
-                <!--<TextView-->
-                    <!--android:textColor="@color/colorIngredientInclusion"-->
-                    <!--android:id="@+id/r_ingredients_used"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textSize="16dp"-->
-                    <!--android:textStyle="bold"/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/r_ingredients_missing"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:textSize="16dp"/>-->
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -81,14 +86,64 @@
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:paddingTop="20dp"
-                    android:text="Instructions:"/>
+                    android:paddingBottom="20dp"
+                    android:text="Required Ingredients:"/>
 
                 <TextView
-                    android:id="@+id/r_instructions_content"
+                    android:id="@+id/r_required_ingredients_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/r_additional_ingredients"
+                android:layout_below="@+id/r_required_ingredients"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="Additional Ingredients:"/>
+
+                <TextView
+                    android:id="@+id/r_additional_ingredients_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/r_instructions"
+                android:layout_below="@+id/r_additional_ingredients"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <TextView
+                    android:id="@+id/r_instructions_header"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:paddingTop="20dp"
+                    android:text="Instructions:"/>
+
+                <!--<TextView-->
+                    <!--android:id="@+id/r_instructions_content"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="18sp"-->
+                    <!--/>-->
             </LinearLayout>
 
 
@@ -99,13 +154,24 @@
 
     </ScrollView>
 
-    <TextView
+    <ProgressBar
         android:id="@+id/r_loading"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
-        android:text="Loading recipe content..."/>
+        android:indeterminate="true"
+        android:minHeight="125dp"
+        android:minWidth="125dp"
+        android:maxWidth="300dp"
+        android:maxHeight="300dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/r_loading"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:textAlignment="center"-->
+        <!--android:text="Loading recipe content..."/>-->
 
 
 </FrameLayout>
