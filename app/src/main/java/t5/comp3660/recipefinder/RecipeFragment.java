@@ -65,11 +65,11 @@ public class RecipeFragment extends Fragment {
                 Type jsonType = new TypeToken<Recipe>(){}.getType();
                 Recipe recipe = gson.fromJson(result, jsonType);
                 LinearLayout r_inst = rootView.findViewById(R.id.r_instructions);
-                for (Recipe.RecipeInstruction instruction : recipe.analyzedInstructions) {
+                for (Recipe.Instruction instruction : recipe.analyzedInstructions) {
                     TextView rInstText = new TextView(rootView.getContext());
                     String instText = "";
                     instText += instruction.name + "\n";
-                    for (Recipe.RecipeInstruction.RecipeStep step : instruction.steps) {
+                    for (Recipe.Instruction.Step step : instruction.steps) {
                         instText += step.number + ". " + step.step + "\n\n";
                     }
                     rInstText.setText(instText);
@@ -79,25 +79,25 @@ public class RecipeFragment extends Fragment {
                 }
                 int green = rootView.getContext().getResources().getColor(R.color.colorIngredientInclusion);
 
-                Type listType = new TypeToken<List<Recipe.RecipeIngredient>>(){}.getType();
-                List<Recipe.RecipeIngredient> missing = gson.fromJson(missedIngredientsJson, listType);
-                List<Recipe.RecipeIngredient> used = gson.fromJson(usedIngredientsJson, listType);
-                List<Recipe.RecipeIngredient> unused = gson.fromJson(unusedIngredientsJson, listType);
+                Type listType = new TypeToken<List<RecipeResult.Ingredient>>(){}.getType();
+                List<RecipeResult.Ingredient> missing = gson.fromJson(missedIngredientsJson, listType);
+                List<RecipeResult.Ingredient> used = gson.fromJson(usedIngredientsJson, listType);
+                List<RecipeResult.Ingredient> unused = gson.fromJson(unusedIngredientsJson, listType);
                 String requiredIngredients = "";
                 String additionalIngredients = "";
-                HashMap<Integer, Recipe.RecipeIngredient> missingMap = new HashMap<Integer, Recipe.RecipeIngredient>();
-                HashMap<Integer, Recipe.RecipeIngredient> usedMap = new HashMap<Integer, Recipe.RecipeIngredient>();
-                HashMap<Integer, Recipe.RecipeIngredient> unUsedMap = new HashMap<Integer, Recipe.RecipeIngredient>();
-                for (Recipe.RecipeIngredient miss: missing) {
+                HashMap<Integer, RecipeResult.Ingredient> missingMap = new HashMap<Integer, RecipeResult.Ingredient>();
+                HashMap<Integer, RecipeResult.Ingredient> usedMap = new HashMap<Integer, RecipeResult.Ingredient>();
+                HashMap<Integer, RecipeResult.Ingredient> unUsedMap = new HashMap<Integer, RecipeResult.Ingredient>();
+                for (RecipeResult.Ingredient miss: missing) {
                     missingMap.put(miss.id, miss);
                 }
-                for (Recipe.RecipeIngredient use: used) {
+                for (RecipeResult.Ingredient use: used) {
                     usedMap.put(use.id, use);
                 }
-                for (Recipe.RecipeIngredient un: unused) {
+                for (RecipeResult.Ingredient un: unused) {
                     unUsedMap.put(un.id, un);
                 }
-                for (Recipe.RecipeIngredient ext_ing : recipe.extendedIngredients) {
+                for (Recipe.Ingredient ext_ing : recipe.extendedIngredients) {
                     if (usedMap.containsKey(ext_ing.id)) {
                         requiredIngredients += "<font color='" + green + "'>" + ext_ing.name + "</font> - " + String.format("%.2f", ext_ing.measures.us.amount) + " " + ext_ing.measures.us.unitLong + "<br/>";
                     } else if (missingMap.containsKey(ext_ing.id)) {

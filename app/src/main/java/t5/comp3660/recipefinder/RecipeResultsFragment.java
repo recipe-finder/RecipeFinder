@@ -55,7 +55,6 @@ public class RecipeResultsFragment extends Fragment {
 
         ListView rcpListView = (ListView) rootview.findViewById(R.id.RecipeResultsListView);
         ProgressBar rcpEmpty = rootview.findViewById(R.id.rr_loading);
-//        TextView rcpEmpty = (TextView) rootview.findViewById(R.id.RecipeResultsEmpty);
         rcpListView.setAdapter(adapter);
         rcpListView.setEmptyView(rcpEmpty);
         final ArrayList<String> searchIngredients = new ArrayList<String>();

@@ -8,15 +8,15 @@ public class RecipeResultListItem {
 
     public int id;
     public String title;
+    public Bitmap image;
     public String imageUrl;
     public int usedIngredientCount;
     public int missingIngredientCount;
-    public Bitmap image;
     public boolean imageLoaded = false;
     public String details;
-    public List<Recipe.RecipeIngredient> missedIngredients;
-    public List<Recipe.RecipeIngredient> usedIngredients;
-    public List<Recipe.RecipeIngredient> unusedIngredients;
+    public List<RecipeResult.Ingredient> missedIngredients;
+    public List<RecipeResult.Ingredient> usedIngredients;
+    public List<RecipeResult.Ingredient> unusedIngredients;
 
     public RecipeResultListItem(RecipeResult recipeResult) {
         this.id = recipeResult.id;

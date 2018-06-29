@@ -6,21 +6,16 @@ public class RecipeResult {
     public int id;
     public String title;
     public String image;
-    public String imageType;
     public int usedIngredientCount;
     public int missedIngredientCount;
-    public int likes;
-    public List<Recipe.RecipeIngredient> missedIngredients;
-    public List<Recipe.RecipeIngredient> usedIngredients;
-    public List<Recipe.RecipeIngredient> unusedIngredients;
+    public List<Ingredient> missedIngredients;
+    public List<Ingredient> usedIngredients;
+    public List<Ingredient> unusedIngredients;
 
-//    public RecipeResult(int id, String title, String image, String imageType, int usedIngredientCount, int missedIngredientCount, int likes) {
-//        this.id = id;
-//        this.title = title;
-//        this.image = image;
-//        this.imageType = imageType;
-//        this.usedIngredientCount = usedIngredientCount;
-//        this.missedIngredientCount = missedIngredientCount;
-//        this.likes = likes;
-//    }
+    public static class Ingredient {
+        public int id;
+        public Double amount;
+        public String unitLong;
+        public String name;
+    }
 }

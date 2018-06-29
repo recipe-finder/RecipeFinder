@@ -6,25 +6,23 @@ public class Recipe {
     public int id;
     public String title;
     public int readyInMinutes;
-    public List<RecipeInstruction> analyzedInstructions;
-    public List<RecipeIngredient> extendedIngredients;
     public int servings;
+    public List<Instruction> analyzedInstructions;
+    public List<Ingredient> extendedIngredients;
 
-    public static class RecipeInstruction {
+    public static class Instruction {
         public String name;
-        public List<RecipeStep> steps;
+        public List<Step> steps;
 
-        public static class RecipeStep {
+        public static class Step {
             public int number;
             public String step;
         }
     }
 
-    public static class RecipeIngredient {
+    public static class Ingredient {
         public int id;
         public String name;
-        public Double amount;
-        public String unit;
         public Measurement measures;
 
         public static class Measurement {
