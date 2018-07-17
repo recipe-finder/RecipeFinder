@@ -7,11 +7,23 @@
     tools:context=".MyFridgeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/remove_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Press and hold to remove items from your fridge."
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp" />
+
     <ListView
+        android:paddingTop="20dp"
         android:id="@+id/ListView01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"></ListView>
+        android:layout_margin="20dp"
+        android:choiceMode="multipleChoice"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_marginTop="10dp"
@@ -21,6 +33,8 @@
         android:clickable="true"
         android:layout_margin="20dp"
         android:src="@drawable/ic_plus"
+        app:backgroundTint="#F68E17"
+        app:tint="#0000FF"
         android:layout_gravity="end|bottom"/>
 
     <TextView
@@ -29,6 +43,8 @@
         android:layout_height="fill_parent"
         android:gravity="center_vertical"
         android:paddingLeft="50dp"
+        android:textSize="18sp"
+        android:textAlignment="center"
         android:paddingRight="50dp"
         android:text="Currently no items in your fridge! Please add some to continue"
         />

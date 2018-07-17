@@ -8,3 +8,4 @@ public class IngredientListItem {
         this.name = name;
     }
 }
+
