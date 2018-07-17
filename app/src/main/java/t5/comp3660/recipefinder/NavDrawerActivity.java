@@ -58,7 +58,7 @@ public class NavDrawerActivity extends AppCompatActivity {
                         fragment = new MyFridgeFragment();
                         break;
                     case 1:
-                        fragment = new RecipeSearchFragment();
+                        fragment = new RecipeResultsFragment();
                         break;
                 }
 
@@ -91,5 +91,20 @@ public class NavDrawerActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        Fragment f = getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment searchFragment = new RecipeSearchFragment();
+        Fragment resultsFragment = new RecipeResultsFragment();
+
+        if(f instanceof RecipeResultsFragment)
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
+        else if(f instanceof RecipeFragment)
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, resultsFragment).commit();
+        else
+            super.onBackPressed();
+
     }
 }
