@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -23,21 +22,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-
-/* Search Recipes by Ingredients
- * Get Analyzed RecipeResult Instructions
- * https://market.mashape.com/spoonacular/recipe-food-nutrition#analyze-a-recipe-search-query-1
- */
 public class RecipeResultsFragment extends Fragment {
 
     private List<RecipeResultListItem> recipe_results_list = new ArrayList<RecipeResultListItem>();
     public List<RecipeResult> recipes;
 
-    public RecipeResultsFragment() {
+    public RecipeResultsFragment()
+    {
         // Required empty public constructor
     }
 
