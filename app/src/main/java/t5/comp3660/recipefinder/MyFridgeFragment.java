@@ -61,11 +61,21 @@ public class MyFridgeFragment extends Fragment {
         final IngredientListItemAdapter adapter;
         adapter = new IngredientListItemAdapter(getActivity(),0, ingredient_list);
 
+        final TextView remove_txt = rootview.findViewById(R.id.remove_txt);
+        remove_txt.setVisibility(View.INVISIBLE);
 
-        ListView listView = (ListView) rootview.findViewById(R.id.ListView01);
+        if (ingredient_list.size() > 0){
+            remove_txt.setVisibility(View.VISIBLE);
+
+        }
+
+
+        final ListView listView = (ListView) rootview.findViewById(R.id.ListView01);
         TextView textView = rootview.findViewById(R.id.empty);
         listView.setAdapter(adapter);
         listView.setEmptyView(textView);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,13 +87,38 @@ public class MyFridgeFragment extends Fragment {
                 Log.v(TAG, "item " + position + " is clicked");
                 IngredientListItem clicked = adapter.getItem(position);
                 String ingredient = clicked.name;
+
+                listView.setItemChecked(position, true);
+
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                // TODO Auto-generated method stub
+                IngredientListItem clicked = adapter.getItem(position);
+                String ingredient = clicked.name;
+
+                listView.setItemChecked(position, true);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 ingredient_list.remove(clicked);
                 adapter.notifyDataSetChanged();
                 editor.remove(ingredient);
                 editor.commit();
+                Toast.makeText(getActivity(), "Removed " + ingredient.toLowerCase() + " from your fridge.", Toast.LENGTH_SHORT).show();
+
+                if(adapter.getCount() == 0){
+                    remove_txt.setVisibility(View.INVISIBLE);
+                }
+                return true;
             }
+
         });
+
+
         FloatingActionButton fab = rootview.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +145,7 @@ public class MyFridgeFragment extends Fragment {
                             adapter.notifyDataSetChanged();
                             Log.v(TAG, "ingredient: " + ingredient);
                         }
-
-
+                        remove_txt.setVisibility(View.VISIBLE);
                     }
                 })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -127,5 +161,4 @@ public class MyFridgeFragment extends Fragment {
         });
         return rootview;
     }
-
 }

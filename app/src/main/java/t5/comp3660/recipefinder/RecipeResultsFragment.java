@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rapidapi.rapidconnect.RapidApiConnect;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -20,20 +17,6 @@ import com.rapidapi.rapidconnect.RapidApiConnect;
  */
 public class RecipeResultsFragment extends Fragment
 {
-    RapidApiConnect connect = new RapidApiConnect("default-application_5b3263fbe4b0547c4a074f27",
-            "56a06aa1-dcfc-431d-b1a8-37744f390a9f");
-
-
-    public RapidApiConnect getConnect()
-    {
-        return connect;
-    }
-
-    public void setConnect(RapidApiConnect connect)
-    {
-        this.connect = connect;
-    }
-
 
     public RecipeResultsFragment()
     {
