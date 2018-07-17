@@ -92,4 +92,19 @@ public class NavDrawerActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed(){
+        Fragment f = getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment searchFragment = new RecipeSearchFragment();
+        Fragment resultsFragment = new RecipeResultsFragment();
+
+        if(f instanceof RecipeResultsFragment)
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
+        else if(f instanceof RecipeFragment)
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, resultsFragment).commit();
+        else
+            super.onBackPressed();
+
+    }
 }

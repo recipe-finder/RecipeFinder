@@ -73,19 +73,22 @@ public class RecipeResultsFragment extends Fragment {
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<RecipeResult>>(){}.getType();
                 recipes = gson.fromJson(result, listType);
-                for (RecipeResult recipeResult: recipes) {
-                    RecipeResultListItem item = new RecipeResultListItem(recipeResult);
-                    item.image = defaultImage;
-                    item.details = "You have " + item.usedIngredientCount + " out of the required " + (item.usedIngredientCount + item.missingIngredientCount) + " ingredients";
-                    recipe_results_list.add(item);
-                }
-                Collections.sort(recipe_results_list, new Comparator<RecipeResultListItem>() {
-                    @Override
-                    public int compare(RecipeResultListItem o1, RecipeResultListItem o2) {
-                        return o1.usedIngredientCount < o2.usedIngredientCount ? 0 : -1;
+                if (recipes != null) {
+                    for (RecipeResult recipeResult: recipes) {
+                        RecipeResultListItem item = new RecipeResultListItem(recipeResult);
+                        item.image = defaultImage;
+                        item.details = "You have " + item.usedIngredientCount + " out of the required " + (item.usedIngredientCount + item.missingIngredientCount) + " ingredients";
+                        recipe_results_list.add(item);
                     }
-                });
-                adapter.notifyDataSetChanged();
+                    Collections.sort(recipe_results_list, new Comparator<RecipeResultListItem>() {
+                        @Override
+                        public int compare(RecipeResultListItem o1, RecipeResultListItem o2) {
+                            return o1.usedIngredientCount < o2.usedIngredientCount ? 0 : -1;
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
+                }
+
             }
         });
         String path = "/recipes/findByIngredients";
