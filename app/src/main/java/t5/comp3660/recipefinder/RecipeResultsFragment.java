@@ -39,6 +39,8 @@ public class RecipeResultsFragment extends Fragment {
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe_results, container, false);
 
+        getActivity().setTitle("Recipe Results");
+
         final Bitmap defaultImage;
         defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.img_placeholder);
 

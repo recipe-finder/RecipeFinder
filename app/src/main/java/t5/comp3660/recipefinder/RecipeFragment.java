@@ -38,6 +38,7 @@ public class RecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_recipe, container, false);
+        getActivity().setTitle("Recipe Information");
         Bundle bundle = this.getArguments();
         String recipeName = bundle.getString("title");
         String recipeImageUrl = bundle.getString("imageUrl");
