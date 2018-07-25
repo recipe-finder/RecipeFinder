@@ -1,6 +1,5 @@
 package t5.comp3660.recipefinder;
 
-
 import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -22,6 +22,7 @@ public class NavDrawerActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     String[] mDrawerOptionLabels;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,6 @@ public class NavDrawerActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        // Populating ListView and Hadnling Selection
         Resources resources = getResources();
         mDrawerOptionLabels = resources.getStringArray(R.array.sliding_drawer_array);
         ArrayAdapter<String> drawerAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerOptionLabels);
@@ -58,7 +58,7 @@ public class NavDrawerActivity extends AppCompatActivity {
                         fragment = new MyFridgeFragment();
                         break;
                     case 1:
-                        fragment = new RecipeResultsFragment();
+                        fragment = new RecipeSearchFragment();
                         break;
                 }
 
@@ -75,9 +75,8 @@ public class NavDrawerActivity extends AppCompatActivity {
             fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
             setTitle(mDrawerOptionLabels[0]);
         }
-
-
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
