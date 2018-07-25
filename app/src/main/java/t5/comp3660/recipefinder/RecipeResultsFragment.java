@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,8 +46,8 @@ public class RecipeResultsFragment extends Fragment {
 
         final RecipeResultListItemAdapter adapter = new RecipeResultListItemAdapter(getActivity(), 0, recipe_results_list);
 
-        ListView rcpListView = (ListView) rootview.findViewById(R.id.RecipeResultsListView);
-        ProgressBar rcpEmpty = rootview.findViewById(R.id.rr_loading);
+        final ListView rcpListView = (ListView) rootview.findViewById(R.id.RecipeResultsListView);
+        final ProgressBar rcpEmpty = rootview.findViewById(R.id.rr_loading);
         rcpListView.setAdapter(adapter);
         rcpListView.setEmptyView(rcpEmpty);
         final ArrayList<String> searchIngredients = new ArrayList<String>();
@@ -59,9 +60,20 @@ public class RecipeResultsFragment extends Fragment {
         searchIngredients.add("parmesan");
         searchIngredients.add("paprika");
 
+
+
+
         SpoonacularRequest getRequest = new SpoonacularRequest(new OnTaskComplete() {
             @Override
             public void onTaskCompleteRequest(String result) {
+                if (result == null) {
+                    TextView txt = new TextView(getActivity());
+                    txt.setText("No recipes were found. Please try again.");
+                    LinearLayout lin = getActivity().findViewById(R.id.lin_list);
+                    rcpEmpty.setVisibility(View.INVISIBLE);
+                    lin.addView(txt);
+                    return;
+                }
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<RecipeResult>>(){}.getType();
                 recipes = gson.fromJson(result, listType);
@@ -114,6 +126,8 @@ public class RecipeResultsFragment extends Fragment {
                 fm.beginTransaction().replace(R.id.content_frame, recipe).commit();
             }
         });
+
+        Log.v("myApp", "returning view");
 
         return rootview;
     }

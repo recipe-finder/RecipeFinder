@@ -16,4 +16,6 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="recipe_results_empty">Loading Recipes...</string>
+    <string name="search">Search</string>
+    <string name="my_fridge_contents">My Fridge</string>
 </resources>
