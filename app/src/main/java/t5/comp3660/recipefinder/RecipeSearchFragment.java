@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 
 /**
@@ -24,7 +26,6 @@ public class RecipeSearchFragment extends Fragment {
 
     public RecipeSearchFragment() {
         // Required empty public constructor
-
     }
 
     @Override
@@ -33,6 +34,7 @@ public class RecipeSearchFragment extends Fragment {
         // Inflate the layout for this fragment
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe_search, container, false);
+        getActivity().setTitle("Search Recipes");
 
         CheckedTextViewAdapter adapter;
         ListView listView = (ListView) rootview.findViewById(R.id.lv);
@@ -57,7 +59,4 @@ public class RecipeSearchFragment extends Fragment {
         });*/
         return rootview;
     }
-
-
 }
-

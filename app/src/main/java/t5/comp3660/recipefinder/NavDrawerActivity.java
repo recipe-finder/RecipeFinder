@@ -1,6 +1,5 @@
 package t5.comp3660.recipefinder;
 
-import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.app.Fragment;
@@ -42,7 +41,6 @@ public class NavDrawerActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        // Populating ListView and Handling Selection
         Resources resources = getResources();
         mDrawerOptionLabels = resources.getStringArray(R.array.sliding_drawer_array);
         ArrayAdapter<String> drawerAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerOptionLabels);
@@ -94,4 +92,18 @@ public class NavDrawerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed(){
+        Fragment f = getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment searchFragment = new RecipeSearchFragment();
+        Fragment resultsFragment = new RecipeResultsFragment();
+
+        if(f instanceof RecipeResultsFragment)
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, searchFragment).commit();
+        else if(f instanceof RecipeFragment)
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, resultsFragment).commit();
+        else
+            super.onBackPressed();
+
+    }
 }
