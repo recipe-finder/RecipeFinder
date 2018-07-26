@@ -50,15 +50,17 @@ public class RecipeResultsFragment extends Fragment {
         final ProgressBar rcpEmpty = rootview.findViewById(R.id.rr_loading);
         rcpListView.setAdapter(adapter);
         rcpListView.setEmptyView(rcpEmpty);
-        final ArrayList<String> searchIngredients = new ArrayList<String>();
-        searchIngredients.add("rice");
-        searchIngredients.add("chicken");
-        searchIngredients.add("butter");
-        searchIngredients.add("salt");
-        searchIngredients.add("pepper");
-        searchIngredients.add("onion");
-        searchIngredients.add("parmesan");
-        searchIngredients.add("paprika");
+        Bundle bundle = this.getArguments();
+        final ArrayList<String> searchIngredients = bundle.getStringArrayList("ingredients");
+        Log.v("myApp", "inregds from bundle: " + searchIngredients.toString());
+//        searchIngredients.add("rice");
+//        searchIngredients.add("chicken");
+//        searchIngredients.add("butter");
+//        searchIngredients.add("salt");
+//        searchIngredients.add("pepper");
+//        searchIngredients.add("onion");
+//        searchIngredients.add("parmesan");
+//        searchIngredients.add("paprika");
 
 
 

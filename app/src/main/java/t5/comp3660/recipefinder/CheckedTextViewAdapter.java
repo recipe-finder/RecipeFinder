@@ -3,21 +3,27 @@ package t5.comp3660.recipefinder;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckedTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CheckedTextViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<String> rows;
+    public HashMap<Integer, Boolean> checkedPos;
 
     public CheckedTextViewAdapter(@NonNull Context context) {
         super();
@@ -25,6 +31,8 @@ public class CheckedTextViewAdapter extends BaseAdapter {
         this.context = context;
         this.inflater = (LayoutInflater.from(context));
         this.rows = new ArrayList<>();
+        this.checkedPos = new HashMap<Integer, Boolean>();
+
 
     }
 
@@ -38,7 +46,7 @@ public class CheckedTextViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return rows.get(position);
     }
 
@@ -48,7 +56,7 @@ public class CheckedTextViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
         view = inflater.inflate(R.layout.fragment_recipe_search_item, null);
         final CheckedTextView simpleCheckedTextView = (CheckedTextView) view.findViewById(R.id.ctv);
         simpleCheckedTextView.setText(rows.get(position));
@@ -62,13 +70,18 @@ public class CheckedTextViewAdapter extends BaseAdapter {
                     value = "un-Checked";
                     //simpleCheckedTextView.setCheckMarkDrawable();
                     simpleCheckedTextView.setChecked(false);
+                    checkedPos.put(position, false);
+
                 } else {
 // set cheek mark drawable and set checked property to true
                     value = "Checked";
                     //simpleCheckedTextView.setCheckMarkDrawable(R.drawable.checked);
                     simpleCheckedTextView.setChecked(true);
+                    checkedPos.put(position, true);
                 }
-                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+                Log.v("myApp", "position: " + Integer.toString(position));
+                Log.v("myApp", checkedPos.get(position).toString());
+//                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
             }
         });
         return view;

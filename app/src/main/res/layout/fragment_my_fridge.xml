@@ -34,7 +34,7 @@
         android:layout_margin="20dp"
         android:src="@drawable/ic_plus"
         app:backgroundTint="#F68E17"
-        app:tint="#0000FF"
+        app:tint="#FFFFFF"
         android:layout_gravity="end|bottom"/>
 
     <TextView
@@ -46,7 +46,7 @@
         android:textSize="18sp"
         android:textAlignment="center"
         android:paddingRight="50dp"
-        android:text="Currently no items in your fridge! Please add some to continue"
+        android:text="Currently no items in your fridge! Please add some to continue."
         />
 
 </FrameLayout>
