@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:choiceMode="multipleChoice"></ListView>
+        android:choiceMode="multipleChoice"/>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_marginTop="10dp"
@@ -33,7 +33,7 @@
         android:clickable="true"
         android:layout_margin="20dp"
         android:src="@drawable/ic_plus"
-        app:backgroundTint="#F68E17"
+        app:backgroundTint="@color/colorAccent"
         app:tint="#FFFFFF"
         android:layout_gravity="end|bottom"/>
 

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,7 +44,6 @@ public class RecipeFragment extends Fragment {
         final String usedIngredientsJson = bundle.getString("usedIngredients");
         final String unusedIngredientsJson = bundle.getString("unusedIngredients");
         final int recipeId = bundle.getInt("id");
-        Log.v("myApp", Integer.toString(recipeId));
         TextView r_title = rootView.findViewById(R.id.r_title);
         r_title.setText(recipeName);
 
@@ -66,18 +63,27 @@ public class RecipeFragment extends Fragment {
                 Type jsonType = new TypeToken<Recipe>(){}.getType();
                 Recipe recipe = gson.fromJson(result, jsonType);
                 LinearLayout r_inst = rootView.findViewById(R.id.r_instructions);
-                for (Recipe.Instruction instruction : recipe.analyzedInstructions) {
-                    TextView rInstText = new TextView(rootView.getContext());
-                    String instText = "";
-                    instText += instruction.name + "\n";
-                    for (Recipe.Instruction.Step step : instruction.steps) {
-                        instText += step.number + ". " + step.step + "\n\n";
+                if (recipe.analyzedInstructions.size() == 0) {
+                    TextView noinst = new TextView(rootView.getContext());
+                    noinst.setText("No instructions provided for this recipe.");
+                    noinst.setPadding(0, 20, 0, 0);
+                    noinst.setTextSize(14);
+                    r_inst.addView(noinst);
+                } else {
+                    for (Recipe.Instruction instruction : recipe.analyzedInstructions) {
+                        TextView rInstText = new TextView(rootView.getContext());
+                        String instText = "";
+                        instText += instruction.name + "\n";
+                        for (Recipe.Instruction.Step step : instruction.steps) {
+                            instText += step.number + ". " + step.step + "\n\n";
+                        }
+                        rInstText.setText(instText);
+                        rInstText.setPadding(0, 20, 0, 0);
+                        rInstText.setTextSize(14);
+                        r_inst.addView(rInstText);
                     }
-                    rInstText.setText(instText);
-                    rInstText.setPadding(0, 20, 0, 0);
-                    rInstText.setTextSize(18);
-                    r_inst.addView(rInstText);
                 }
+
                 int green = rootView.getContext().getResources().getColor(R.color.colorIngredientInclusion);
 
                 Type listType = new TypeToken<List<RecipeResult.Ingredient>>(){}.getType();

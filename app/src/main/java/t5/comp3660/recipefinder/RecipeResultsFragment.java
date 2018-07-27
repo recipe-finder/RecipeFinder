@@ -1,6 +1,7 @@
 package t5.comp3660.recipefinder;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,7 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,6 +30,7 @@ public class RecipeResultsFragment extends Fragment {
 
     private List<RecipeResultListItem> recipe_results_list = new ArrayList<RecipeResultListItem>();
     public List<RecipeResult> recipes;
+    public ArrayList<String> searchIngredients;
 
     public RecipeResultsFragment()
     {
@@ -39,7 +44,7 @@ public class RecipeResultsFragment extends Fragment {
 
         final View rootview = inflater.inflate(R.layout.fragment_recipe_results, container, false);
 
-        getActivity().setTitle("Recipe Results");
+        getActivity().setTitle("Recipes");
 
         final Bitmap defaultImage;
         defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.img_placeholder);
@@ -51,68 +56,65 @@ public class RecipeResultsFragment extends Fragment {
         rcpListView.setAdapter(adapter);
         rcpListView.setEmptyView(rcpEmpty);
         Bundle bundle = this.getArguments();
-        final ArrayList<String> searchIngredients = bundle.getStringArrayList("ingredients");
-        Log.v("myApp", "inregds from bundle: " + searchIngredients.toString());
-//        searchIngredients.add("rice");
-//        searchIngredients.add("chicken");
-//        searchIngredients.add("butter");
-//        searchIngredients.add("salt");
-//        searchIngredients.add("pepper");
-//        searchIngredients.add("onion");
-//        searchIngredients.add("parmesan");
-//        searchIngredients.add("paprika");
+        searchIngredients = bundle.getStringArrayList("ingredients");
 
-
-
-
-        SpoonacularRequest getRequest = new SpoonacularRequest(new OnTaskComplete() {
-            @Override
-            public void onTaskCompleteRequest(String result) {
-                if (result == null) {
-                    TextView txt = new TextView(getActivity());
-                    txt.setText("No recipes were found. Please try again.");
-                    LinearLayout lin = getActivity().findViewById(R.id.lin_list);
-                    rcpEmpty.setVisibility(View.INVISIBLE);
-                    lin.addView(txt);
-                    return;
-                }
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<RecipeResult>>(){}.getType();
-                recipes = gson.fromJson(result, listType);
-                if (recipes != null) {
-                    for (RecipeResult recipeResult: recipes) {
-                        RecipeResultListItem item = new RecipeResultListItem(recipeResult);
-                        item.image = defaultImage;
-                        item.details = "You have " + item.usedIngredientCount + " out of the required " + (item.usedIngredientCount + item.missingIngredientCount) + " ingredients";
-                        recipe_results_list.add(item);
+        if (recipe_results_list.isEmpty()) {
+            SpoonacularRequest getRequest = new SpoonacularRequest(new OnTaskComplete() {
+                @Override
+                public void onTaskCompleteRequest(String result) {
+                    if (result == null) {
+                        TextView txt = new TextView(getActivity());
+                        txt.setText("No recipes were found. Please try again.");
+                        LinearLayout lin = getActivity().findViewById(R.id.lin_list);
+                        rcpEmpty.setVisibility(View.INVISIBLE);
+                        lin.addView(txt);
+                        return;
                     }
-                    Collections.sort(recipe_results_list, new Comparator<RecipeResultListItem>() {
-                        @Override
-                        public int compare(RecipeResultListItem o1, RecipeResultListItem o2) {
-                            return o1.usedIngredientCount < o2.usedIngredientCount ? 0 : -1;
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<RecipeResult>>(){}.getType();
+                    recipes = gson.fromJson(result, listType);
+                    if (recipes != null) {
+                        for (RecipeResult recipeResult: recipes) {
+                            RecipeResultListItem item = new RecipeResultListItem(recipeResult);
+                            item.image = defaultImage;
+                            item.details = "You have " + item.usedIngredientCount + " out of the required " + (item.usedIngredientCount + item.missingIngredientCount) + " ingredients";
+                            recipe_results_list.add(item);
                         }
-                    });
-                    adapter.notifyDataSetChanged();
+                        Collections.sort(recipe_results_list, new Comparator<RecipeResultListItem>() {
+                            @Override
+                            public int compare(RecipeResultListItem o1, RecipeResultListItem o2) {
+                                return o1.usedIngredientCount < o2.usedIngredientCount ? 0 : -1;
+                            }
+                        });
+                        adapter.notifyDataSetChanged();
+                    }
+
                 }
+            });
+            String path = "/recipes/findByIngredients";
+            String ingredients = "";
+            for (String ingredient : searchIngredients) {
+                ingredients += ingredient + ",";
 
             }
-        });
-        String path = "/recipes/findByIngredients";
-        String ingredients = "";
-        for (String ingredient : searchIngredients) {
-            ingredients += ingredient + ",";
+            ingredients = ingredients.substring(0, ingredients.length() - 1); // remove extra comma
+            String encoded = ingredients;
+            try {
+                encoded = URLEncoder.encode(ingredients, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
 
+            }
+            String params = "?ingredients=" + encoded + "&number=25&ranking=2&fillIngredients=true";
+            getRequest.execute(path, params);
         }
-        ingredients = ingredients.substring(0, ingredients.length() - 1); // remove extra comma
-        Log.v("myApp", ingredients);
-        String params = "?ingredients=" + ingredients + "&number=10&ranking=1&fillIngredients=true";
-        getRequest.execute(path, params);
 
 
         rcpListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+
                 Fragment recipe = new RecipeFragment();
                 Bundle recipeData = new Bundle();
                 Gson gson = new Gson();
@@ -125,11 +127,11 @@ public class RecipeResultsFragment extends Fragment {
                 recipeData.putString("usedIngredients", gson.toJson(clicked.usedIngredients));
                 recipeData.putString("unusedIngredients", gson.toJson(clicked.unusedIngredients));
                 recipe.setArguments(recipeData);
-                fm.beginTransaction().replace(R.id.content_frame, recipe).commit();
+                transaction.replace(R.id.content_frame, recipe);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
-
-        Log.v("myApp", "returning view");
 
         return rootview;
     }

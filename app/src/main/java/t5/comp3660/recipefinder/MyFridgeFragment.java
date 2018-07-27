@@ -2,25 +2,22 @@ package t5.comp3660.recipefinder;
 
 
 import android.app.AlertDialog;
-import android.app.LauncherActivity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +81,6 @@ public class MyFridgeFragment extends Fragment {
                                     View view,
                                     int position,
                                     long id) {
-                Log.v(TAG, "item " + position + " is clicked");
                 IngredientListItem clicked = adapter.getItem(position);
                 String ingredient = clicked.name;
 
@@ -125,25 +121,29 @@ public class MyFridgeFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final EditText editText = new EditText(getActivity());
+                editText.requestFocus();
                 builder.setTitle("Add an Item to Your Fridge.");
                 builder.setView(editText);
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String ingredient = editText.getText().toString();
-                        if(sharedpreferences.getString(ingredient, null) != null){
+                        if (isStringNullOrWhiteSpace(ingredient)) {
+                            Toast toast = Toast.makeText(getActivity(), "Ingredient cannot be blank", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        else if(sharedpreferences.getString(ingredient, null) != null){
                             CharSequence text = "Ingredient " + ingredient + " already exists in your fridge";
                             Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
                             toast.show();
                         }
-                        else{
+                        else {
                             IngredientListItem new_ingredient = new IngredientListItem(ingredient);
                             ingredient_list.add(new_ingredient);
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(ingredient,ingredient);
                             editor.commit();
                             adapter.notifyDataSetChanged();
-                            Log.v(TAG, "ingredient: " + ingredient);
                         }
                         remove_txt.setVisibility(View.VISIBLE);
                     }
@@ -154,11 +154,26 @@ public class MyFridgeFragment extends Fragment {
 
                             }
                         });
-
-                builder.show();
+                Dialog d = builder.create();
+                d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                d.show();
 
             }
         });
         return rootview;
+    }
+
+    public static boolean isStringNullOrWhiteSpace(String value) {
+        if (value == null) {
+            return true;
+        }
+
+        for (int i = 0; i < value.length(); i++) {
+            if (!Character.isWhitespace(value.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

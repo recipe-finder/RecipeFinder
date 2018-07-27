@@ -32,8 +32,6 @@ public class CheckedTextViewAdapter extends BaseAdapter {
         this.inflater = (LayoutInflater.from(context));
         this.rows = new ArrayList<>();
         this.checkedPos = new HashMap<Integer, Boolean>();
-
-
     }
 
     public void addRow(String txt) {
@@ -57,31 +55,20 @@ public class CheckedTextViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-        view = inflater.inflate(R.layout.fragment_recipe_search_item, null);
+        view = inflater.inflate(R.layout.recipe_search_list_item, null);
         final CheckedTextView simpleCheckedTextView = (CheckedTextView) view.findViewById(R.id.ctv);
         simpleCheckedTextView.setText(rows.get(position));
-// perform on Click Event Listener on CheckedTextView
         simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String value = "";
                 if (simpleCheckedTextView.isChecked()) {
-// set cheek mark drawable and set checked property to false
-                    value = "un-Checked";
-                    //simpleCheckedTextView.setCheckMarkDrawable();
                     simpleCheckedTextView.setChecked(false);
                     checkedPos.put(position, false);
 
                 } else {
-// set cheek mark drawable and set checked property to true
-                    value = "Checked";
-                    //simpleCheckedTextView.setCheckMarkDrawable(R.drawable.checked);
                     simpleCheckedTextView.setChecked(true);
                     checkedPos.put(position, true);
                 }
-                Log.v("myApp", "position: " + Integer.toString(position));
-                Log.v("myApp", checkedPos.get(position).toString());
-//                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
             }
         });
         return view;

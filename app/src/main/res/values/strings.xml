@@ -9,7 +9,7 @@
 
     <string-array name="sliding_drawer_array">
         <item>My Fridge</item>
-        <item>Recipes</item>
+        <item>Find Recipes</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>

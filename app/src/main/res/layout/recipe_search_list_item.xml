@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
     <CheckedTextView
         android:id="@+id/ctv"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:checked="true">
+        android:checked="true"
+        android:textSize="15sp"
+        android:textColor="#808080"
+        android:gravity="center_vertical"
+        android:textAlignment="gravity"
+        android:textStyle="bold">
     </CheckedTextView>
+
 </LinearLayout>

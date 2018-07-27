@@ -19,15 +19,11 @@ public class IngredientListItemAdapter extends ArrayAdapter<IngredientListItem> 
                 (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
     }
     public View getView(int position, View convertView, ViewGroup parent){
-        // Retrieve data
         IngredientListItem item = (IngredientListItem)getItem(position);
-        // Use layout file to generate View
         View view = mInflater.inflate(R.layout.ingredient_list_item, null);
-        // Set user name
         TextView name;
         name = (TextView)view.findViewById(R.id.name);
         name.setText(item.name);
-        // Set comment
 
         return view;
     }
